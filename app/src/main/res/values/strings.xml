@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">GPSFit</string>
+
+    <!--UI-->
+    <string name="main_title">GPS Fit</string>
+    <string name="track_title">Track information</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="elapsed_time_tv">Elapsed time</string>
+    <string name="name">Name</string>
+    <string name="ave_speed">Ave Speed</string>
+    <string name="start_time">Start Time</string>
+    <string name="save">Save</string>
+
+    <!--Broadcast message-->
+    <string name="GPSService">GPS Service</string>
+    <string name="Longitude">Longitude</string>
+    <string name="Latitude">Latitude</string>
+    <string name="Speed">Speed</string>
+    <string name="ElapsedTime">Elapsed</string>
+    <string name="StartedTime">StartTime</string>
+
+    <!--Broadcast service-->
+    <string name="LocationUpdateService">com.ru.gpsfit.location</string>
+    <string name="IsLocation">IsLocation</string>
+    <string name="title_activity_track">TrackActivity</string>
+
+    <string name="FitData">FitData</string>
+
+    <string name="MessageTypes">MessageTypes</string>
+    <string name="LocationMsg">Location</string>
+    <string name="ElpasedMsg">Elpased</string>
+    <string name="FitDataMsg">FitData</string>
+
+</resources>
