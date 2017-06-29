@@ -1,4 +1,4 @@
-package com.ru.gpsfit.com.ro.gpsfit.view;
+package com.ru.gpsfit.views;
 
 import android.Manifest.permission;
 import android.content.BroadcastReceiver;
@@ -22,6 +22,7 @@ import com.ru.gpsfit.R;
 import com.ru.gpsfit.fitdata.FitData;
 import com.ru.gpsfit.gpssensor.GPSSensor;
 import com.ru.gpsfit.gpssensor.GPSSensor.GPSBinder;
+import com.ru.gpsfit.utils.*;
 
 import java.util.Locale;
 
@@ -177,7 +178,9 @@ public class MainActivity extends AppCompatActivity{
 
         } else if(messageType.contains(getString(R.string.ElpasedMsg))){
             // Update elapsed time
-            tvElapsedTime.setText(String.format(Locale.US, "%d", bundle.getInt(getResources().getString(R.string.ElapsedTime))));
+            int elapsedTime = bundle.getInt(getResources().getString(R.string.ElapsedTime));
+            tvElapsedTime.setText(String.format(Locale.US, "%s", Conversions.SecondsToString(elapsedTime)));
+
         } else if (messageType.contains(getString(R.string.FitDataMsg))){
             Log.d(TAG, "got Data message");
             // Todo : Serializable not work properly, could not get data from service.

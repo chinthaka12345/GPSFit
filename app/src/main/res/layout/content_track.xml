@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ru.gpsfit.com.ro.gpsfit.view.TrackActivity"
+    tools:context="com.ru.gpsfit.views.TrackActivity"
     tools:showIn="@layout/activity_track">
 
     <LinearLayout
