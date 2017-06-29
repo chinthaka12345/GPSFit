@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".com.ro.gpsfit.view.MainActivity">
+        <activity android:name=".views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -25,7 +25,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".com.ro.gpsfit.view.TrackActivity"
+            android:name=".views.TrackActivity"
             android:label="@string/title_activity_track"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

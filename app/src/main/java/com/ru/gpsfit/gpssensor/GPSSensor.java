@@ -23,7 +23,6 @@ import java.util.TimerTask;
  */
 
 public class GPSSensor extends Service implements LocationListener {
-//public class GPSSensor extends Service{
 
     static final String TAG = "GPSSensor";
 
@@ -86,7 +85,7 @@ public class GPSSensor extends Service implements LocationListener {
         Log.d(TAG, "destroy");
 
         mLocationManager.removeUpdates(this);
-//        stopTimer();
+        stopTimer();
 //        fitData.finishTrack();
 
 //        sendFitData();
@@ -109,6 +108,7 @@ public class GPSSensor extends Service implements LocationListener {
         try {
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, this);
             Log.d(TAG, "start location req");
+            startTimer();
         } catch (java.lang.SecurityException ex){
             // Already checked permission in Main Activity
 //            Toast.makeText(this, "Do not have GPS permission", Toast.LENGTH_LONG).show();
@@ -163,6 +163,7 @@ public class GPSSensor extends Service implements LocationListener {
 
     }
 
+
     /**
      * Count elapsed time
      */
@@ -183,6 +184,14 @@ public class GPSSensor extends Service implements LocationListener {
 
 
     /**
+     * Stop elapsed time timer
+     */
+    private void stopTimer() {
+        timer.cancel();
+    }
+
+
+    /**
      * Send elapsed time into UI thread
      */
     private void sendElapsedTime() {
@@ -199,12 +208,7 @@ public class GPSSensor extends Service implements LocationListener {
         }
     }
 
-    /**
-     * Stop elapsed time timer
-     */
-    private void stopTimer() {
-        timer.cancel();
-    }
+
 
 
     /**

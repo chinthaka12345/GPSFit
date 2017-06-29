@@ -1,4 +1,4 @@
-package com.ru.gpsfit.com.ro.gpsfit.view;
+package com.ru.gpsfit.views;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
