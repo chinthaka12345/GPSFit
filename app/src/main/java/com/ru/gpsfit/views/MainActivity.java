@@ -18,13 +18,16 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.ru.gpsfit.R;
 import com.ru.gpsfit.fitdata.FitData;
 import com.ru.gpsfit.gpssensor.GPSSensor;
 import com.ru.gpsfit.gpssensor.GPSSensor.GPSBinder;
-import com.ru.gpsfit.utils.*;
+import com.ru.gpsfit.utils.Conversions;
 
 import java.util.Locale;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity{
         Button btnStart = (Button) findViewById(R.id.btnStart);
         Button btnStop = (Button) findViewById(R.id.btnStop);
 
+        Fabric.with(this, new Crashlytics());
         btnStart.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
