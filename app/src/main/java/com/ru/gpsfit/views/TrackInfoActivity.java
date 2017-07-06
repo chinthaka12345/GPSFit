@@ -12,11 +12,12 @@ import android.widget.TextView;
 
 import com.ru.gpsfit.Database.DbPresenter;
 import com.ru.gpsfit.R;
+import com.ru.gpsfit.app.AppController;
 import com.ru.gpsfit.fitdata.FitData;
 
 import java.util.Locale;
 
-public class TrackActivity extends AppCompatActivity {
+public class TrackInfoActivity extends AppCompatActivity {
 
     static final String TAG = "Track Activity";
     FitData fitData;
@@ -59,9 +60,9 @@ public class TrackActivity extends AppCompatActivity {
      */
     private void initTrackActivity(){
 
-        FitData fitData = FitData.getDummyData();
+        AppController appController = (AppController) getApplicationContext();
+        fitData = appController.getFitData();
         updateUI(fitData);
-        this.fitData = fitData;
 
         final Button btnSave = (Button) findViewById(R.id.btnSave);
 

@@ -4,15 +4,13 @@ import android.location.Location;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by chaminda on 17/06/19.
  */
 
-@SuppressWarnings("serial")
-public class FitData implements Serializable {
+public class FitData{
 
     static final String TAG = "FitData";
     private ArrayList<Location> mGPSData;
@@ -90,6 +88,10 @@ public class FitData implements Serializable {
         this.mEndedTime = mEndedTime;
     }
 
+    public Location getCurrentPosition(){
+        return currentPosition;
+    }
+
     public void updateByLocation(Location location) {
 
         if(currentPosition != null) {
@@ -97,7 +99,7 @@ public class FitData implements Serializable {
         }
 
         currentPosition = location;
-
+        mGPSData.add(location);
     }
 
     public void finishTrack() {
@@ -113,6 +115,7 @@ public class FitData implements Serializable {
     }
 
 
+    // Dummy data
     public static FitData getDummyData(){
 
         FitData dummy = new FitData();
@@ -126,12 +129,4 @@ public class FitData implements Serializable {
         return dummy;
     }
 
-    @Override
-    public String toString() {
-
-
-        return mName;
-
-//        return super.toString();
-    }
 }

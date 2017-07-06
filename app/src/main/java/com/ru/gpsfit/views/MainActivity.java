@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.ru.gpsfit.R;
+import com.ru.gpsfit.app.AppController;
 import com.ru.gpsfit.fitdata.FitData;
 import com.ru.gpsfit.gpssensor.GPSSensor;
 import com.ru.gpsfit.gpssensor.GPSSensor.GPSBinder;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity{
     GPSSensor mGpsSensor;
     BroadcastReceiver updateUIReceiver;
     boolean mBound = false;
-
+    FitData fitData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 if(checkLocationPermission()) {
-                    startTrack();
+                    startTracking();
                 } else {
                     requestLocationPermission();
                 }
@@ -90,15 +91,12 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-    private void startTrack() {
+    private void startTracking() {
 
-        Log.d(TAG, "Start track");
         bindGPSSensor();
-
     }
 
     private void stopTrack() {
-        Log.d(TAG, "Stop track");
 
         unbindGPSSensor();
     }
@@ -154,7 +152,7 @@ public class MainActivity extends AppCompatActivity{
                             PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION) !=
                             PackageManager.PERMISSION_GRANTED) {
                         Log.d(TAG, "Got permission");
-                        startTrack();
+                        startTracking();
                     }
 
                 } else {
@@ -176,9 +174,9 @@ public class MainActivity extends AppCompatActivity{
         if(messageType.contains(getString(R.string.LocationMsg))) {
             // Update Location information
             // Todo locale
-            tvLongitude.setText(String.format(Locale.US, "%f", bundle.getDouble(getResources().getString(R.string.Longitude))));
-            tvLatitude.setText(String.format(Locale.US, "%f", bundle.getDouble(getResources().getString(R.string.Latitude))));
-            tvSpeed.setText(String.format(Locale.US, "%f", bundle.getFloat(getResources().getString(R.string.Speed))));
+            tvLongitude.setText(String.format(Locale.US, "%f", fitData.getCurrentPosition().getLongitude()));
+            tvLatitude.setText(String.format(Locale.US, "%f", fitData.getCurrentPosition().getLatitude()));
+            tvSpeed.setText(String.format(Locale.US, "%f", fitData.getmSpeed()));
 
         } else if(messageType.contains(getString(R.string.ElpasedMsg))){
             // Update elapsed time
@@ -186,14 +184,7 @@ public class MainActivity extends AppCompatActivity{
             tvElapsedTime.setText(String.format(Locale.US, "%s", Conversions.SecondsToString(elapsedTime)));
 
         } else if (messageType.contains(getString(R.string.FitDataMsg))){
-            Log.d(TAG, "got Data message");
-            // Todo : Serializable not work properly, could not get data from service.
-            // FitData fitData = intent.getSerializableExtra(getResources().getString(R.string.FitData));
-            // Test with dummy...
-            FitData fitData = FitData.getDummyData();
-            Intent trackIntent = new Intent(this, TrackActivity.class);
-            // Todo : Serializable not work properly, could not get data from service.
-//            trackIntent.putExtra(getResources().getString(R.string.FitData), fitData);
+            Intent trackIntent = new Intent(this, TrackInfoActivity.class);
             startActivity(trackIntent);
         } else{
             Log.d(TAG, "Got other");
@@ -240,6 +231,9 @@ public class MainActivity extends AppCompatActivity{
             GPSBinder binder = (GPSBinder) iBinder;
             mGpsSensor = binder.getService();
             mBound = true;
+
+            AppController appController = (AppController) getApplicationContext();
+            fitData = appController.getFitData();
         }
 
         @Override
