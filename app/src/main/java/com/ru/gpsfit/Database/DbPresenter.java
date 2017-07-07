@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Location;
 import android.util.Log;
 
 import com.ru.gpsfit.Database.FitGPSDataContract.GPSEntry;
@@ -43,15 +42,15 @@ public class DbPresenter {
 
         long newRowId = db.insert(TrackEntry.TABLE_TRACKS, null, values);
 
-        for(Location location: fitData.getmGPSData()){
-            ContentValues gps_val = new ContentValues();
-//            gps_val.put(GPSEntry.COLUMN_NAME_TRACK, fitData.getmName());
-            gps_val.put(GPSEntry.COLUMN_NAME_LONGITUDE, location.getLongitude());
-            gps_val.put(GPSEntry.COLUMN_NAME_LATITUDE, location.getLatitude());
-
-            long newGPSId = db.insert(GPSEntry.TABLE_GPS, null, gps_val);
-
-        }
+//        for(Location location: fitData.getmGPSData()){
+//            ContentValues gps_val = new ContentValues();
+////            gps_val.put(GPSEntry.COLUMN_NAME_TRACK, fitData.getmName());
+//            gps_val.put(GPSEntry.COLUMN_NAME_LONGITUDE, location.getLongitude());
+//            gps_val.put(GPSEntry.COLUMN_NAME_LATITUDE, location.getLatitude());
+//
+//            long newGPSId = db.insert(GPSEntry.TABLE_GPS, null, gps_val);
+//
+//        }
     }
 
 

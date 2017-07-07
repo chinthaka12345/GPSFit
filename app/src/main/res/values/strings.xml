@@ -11,6 +11,7 @@
     <string name="ave_speed">Ave Speed</string>
     <string name="start_time">Start Time</string>
     <string name="save">Save</string>
+    <string name="distance">Distance</string>
 
     <!--Broadcast message-->
     <string name="GPSService">GPS Service</string>
@@ -27,9 +28,22 @@
 
     <string name="FitData">FitData</string>
 
+    <!--Mesage types-->
     <string name="MessageTypes">MessageTypes</string>
     <string name="LocationMsg">Location</string>
     <string name="ElpasedMsg">Elpased</string>
     <string name="FitDataMsg">FitData</string>
 
+    <!--Key values-->
+    <string name="key_distance">distance</string>
+    <string name="key_elapsed_time">elapsed_time</string>
+    <string name="key_started_time">started_time</string>
+    <string name="key_ended_time">ended_time</string>
+    <string name="key_avg_speed">avg_speed</string>
+    <string name="key_gps_data">gps_data</string>
+    <string name="key_name">name</string>
+
+    <!--Toast messages-->
+    <string name="toast_GPS_requirement">GPSFit cannot use without GPS permission</string>
+    <string name="toast_no_track_data">Could not retrieve track data!</string>
 </resources>

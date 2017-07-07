@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.ru.gpsfit.R;
+import com.ru.gpsfit.app.AppController;
 import com.ru.gpsfit.fitdata.FitData;
 
 import java.util.Timer;
@@ -27,9 +28,9 @@ public class GPSSensor extends Service implements LocationListener {
     static final String TAG = "GPSSensor";
 
     public LocationManager mLocationManager;
-    static int elapsedTime;
-    static Timer timer;
-    static FitData fitData;
+    int elapsedTime;
+    Timer timer;
+    FitData fitData;
     private final IBinder mBinder = new GPSBinder();
 
 
@@ -52,20 +53,23 @@ public class GPSSensor extends Service implements LocationListener {
         Log.d(TAG, "on create");
 
         initializeLocationManager();
-        startTrack();
+        startTracking();
         super.onCreate();
     }
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "On start command");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
         Log.d(TAG, "unbind ");
+        mLocationManager.removeUpdates(this);
+        stopTimer();
+
+        sendFitData();
         return super.onUnbind(intent);
     }
 
@@ -83,13 +87,6 @@ public class GPSSensor extends Service implements LocationListener {
     public void onDestroy() {
 
         Log.d(TAG, "destroy");
-
-        mLocationManager.removeUpdates(this);
-        stopTimer();
-//        fitData.finishTrack();
-
-//        sendFitData();
-
         super.onDestroy();
     }
 
@@ -103,12 +100,14 @@ public class GPSSensor extends Service implements LocationListener {
 
 
 
-    public void startTrack() {
+    public void startTracking() {
 
         try {
             mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, this);
             Log.d(TAG, "start location req");
             startTimer();
+            AppController appController = (AppController) getApplicationContext();
+            fitData = appController.getNewFitData();
         } catch (java.lang.SecurityException ex){
             // Already checked permission in Main Activity
 //            Toast.makeText(this, "Do not have GPS permission", Toast.LENGTH_LONG).show();
@@ -135,9 +134,6 @@ public class GPSSensor extends Service implements LocationListener {
 
         local.setAction(getResources().getString(R.string.LocationUpdateService));
         local.putExtra(getResources().getString(R.string.MessageTypes), getResources().getString(R.string.LocationMsg));
-        local.putExtra(getResources().getString(R.string.Longitude), location.getLongitude());
-        local.putExtra(getResources().getString(R.string.Latitude), location.getLatitude());
-        local.putExtra(getResources().getString(R.string.Speed), location.getSpeed());
 
         try {
             this.sendBroadcast(local);
@@ -216,7 +212,7 @@ public class GPSSensor extends Service implements LocationListener {
      * @param location
      */
     private void updateFitData(Location location) {
-//        fitData.updateByLocation(location);
+        fitData.updateByLocation(location);
     }
 
 
@@ -226,18 +222,13 @@ public class GPSSensor extends Service implements LocationListener {
     private void sendFitData(){
         Intent local = new Intent();
         local.setAction(getResources().getString(R.string.LocationUpdateService));
-
         local.putExtra(getResources().getString(R.string.MessageTypes), getResources().getString(R.string.FitDataMsg));
-        // Todo : Serializable not work properly, could not get data from service.
-        local.putExtra(getResources().getString(R.string.FitData), fitData.toString());
-
 
         try {
             this.sendBroadcast(local);
         } catch (java.lang.NullPointerException ex){
             Log.d(TAG, "got null, and ignore");
         }
-
     }
 
 }

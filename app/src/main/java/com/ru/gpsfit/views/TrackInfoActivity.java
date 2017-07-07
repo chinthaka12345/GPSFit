@@ -9,14 +9,16 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ru.gpsfit.Database.DbPresenter;
 import com.ru.gpsfit.R;
+import com.ru.gpsfit.app.AppController;
 import com.ru.gpsfit.fitdata.FitData;
 
 import java.util.Locale;
 
-public class TrackActivity extends AppCompatActivity {
+public class TrackInfoActivity extends AppCompatActivity {
 
     static final String TAG = "Track Activity";
     FitData fitData;
@@ -59,9 +61,13 @@ public class TrackActivity extends AppCompatActivity {
      */
     private void initTrackActivity(){
 
-        FitData fitData = FitData.getDummyData();
-        updateUI(fitData);
-        this.fitData = fitData;
+        AppController appController = (AppController) getApplicationContext();
+        fitData = appController.getFitData();
+        if(fitData != null) {
+            updateUI(fitData);
+        } else {
+            Toast.makeText(this, getResources().getText(R.string.toast_no_track_data), Toast.LENGTH_LONG).show();
+        }
 
         final Button btnSave = (Button) findViewById(R.id.btnSave);
 
