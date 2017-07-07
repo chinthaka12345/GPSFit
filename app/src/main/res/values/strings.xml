@@ -43,4 +43,7 @@
     <string name="key_gps_data">gps_data</string>
     <string name="key_name">name</string>
 
+    <!--Toast messages-->
+    <string name="toast_GPS_requirement">GPSFit cannot use without GPS permission</string>
+    <string name="toast_no_track_data">Could not retrieve track data!</string>
 </resources>

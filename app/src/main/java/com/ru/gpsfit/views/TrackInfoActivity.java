@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ru.gpsfit.Database.DbPresenter;
 import com.ru.gpsfit.R;
@@ -62,7 +63,11 @@ public class TrackInfoActivity extends AppCompatActivity {
 
         AppController appController = (AppController) getApplicationContext();
         fitData = appController.getFitData();
-        updateUI(fitData);
+        if(fitData != null) {
+            updateUI(fitData);
+        } else {
+            Toast.makeText(this, getResources().getText(R.string.toast_no_track_data), Toast.LENGTH_LONG).show();
+        }
 
         final Button btnSave = (Button) findViewById(R.id.btnSave);
 

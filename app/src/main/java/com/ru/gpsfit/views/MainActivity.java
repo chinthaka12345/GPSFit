@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.ru.gpsfit.R;
@@ -147,16 +148,13 @@ public class MainActivity extends AppCompatActivity{
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    Log.d(TAG, "permission got");
-                    if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION) !=
-                            PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION) !=
-                            PackageManager.PERMISSION_GRANTED) {
-                        Log.d(TAG, "Got permission");
+                    if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         startTracking();
                     }
 
                 } else {
-                    Log.d(TAG, "No permissions");
+                    Toast.makeText(this, getResources().getText(R.string.toast_GPS_requirement), Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -174,10 +172,11 @@ public class MainActivity extends AppCompatActivity{
         if(messageType.contains(getString(R.string.LocationMsg))) {
             // Update Location information
             // Todo locale
-            tvLongitude.setText(String.format(Locale.US, "%f", fitData.getCurrentPosition().getLongitude()));
-            tvLatitude.setText(String.format(Locale.US, "%f", fitData.getCurrentPosition().getLatitude()));
-            tvSpeed.setText(String.format(Locale.US, "%f", fitData.getmSpeed()));
-
+            if(fitData != null) {
+                tvLongitude.setText(String.format(Locale.US, "%f", fitData.getCurrentPosition().getLongitude()));
+                tvLatitude.setText(String.format(Locale.US, "%f", fitData.getCurrentPosition().getLatitude()));
+                tvSpeed.setText(String.format(Locale.US, "%f", fitData.getmSpeed()));
+            }
         } else if(messageType.contains(getString(R.string.ElpasedMsg))){
             // Update elapsed time
             int elapsedTime = bundle.getInt(getResources().getString(R.string.ElapsedTime));
